@@ -1,0 +1,181 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ApnaPay - TiwariX Web Solution</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #0f172a; font-family: 'Inter', sans-serif; display: flex; justify-content: center; margin: 0; overflow: hidden; }
+        .app-container { width: 100%; max-width: 420px; height: 100vh; background: #f8fafc; position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
+        .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f8fafc; z-index: 10; transition: 0.3s ease-in-out; }
+        .hidden { display: none; }
+        .paytm-blue { color: #002970; }
+        .apna-gradient { background: linear-gradient(180deg, #00baf2 0%, #002970 100%); }
+        
+        /* Scanner UI */
+        #scanner-view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: none; }
+        video { width: 100%; height: 100%; object-fit: cover; }
+        .scan-box { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 260px; height: 260px; border: 2px solid #00baf2; border-radius: 30px; box-shadow: 0 0 0 2000px rgba(0,0,0,0.6); }
+        .scan-line { position: absolute; width: 100%; height: 4px; background: #00baf2; box-shadow: 0 0 20px #00baf2; animation: move 2s infinite; }
+        @keyframes move { 0% { top: 0; } 100% { top: 100%; } }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div id="login-screen" class="screen flex flex-col p-10 justify-center items-center text-center">
+            <div class="w-20 h-20 apna-gradient rounded-3xl flex items-center justify-center mb-6 shadow-2xl">
+                <i class="fas fa-university text-white text-4xl"></i>
+            </div>
+            <h1 class="text-3xl font-black paytm-blue italic">Apna<span class="text-sky-500">Pay</span></h1>
+            <p class="text-gray-400 text-[10px] font-bold tracking-widest mt-1 mb-12 uppercase">TiwariX Web Solution</p>
+            <div class="w-full space-y-4">
+                <input type="text" id="user" placeholder="Username (Himanshu)" class="w-full p-4 bg-gray-50 border rounded-2xl outline-none font-semibold">
+                <input type="password" id="pass" placeholder="Password" class="w-full p-4 bg-gray-50 border rounded-2xl outline-none">
+                <button onclick="goTo('mobile-screen')" class="w-full bg-[#002970] text-white py-4 rounded-2xl font-bold">Secure Login</button>
+            </div>
+            <p class="mt-20 text-[9px] text-gray-400">Created & Owned by: Himanshu Tiwari</p>
+        </div>
+
+        <div id="mobile-screen" class="screen hidden flex flex-col p-10 justify-center">
+            <h2 class="text-2xl font-black mb-10 paytm-blue">Mobile Verification</h2>
+            <div class="flex border-b-2 border-gray-200 mb-8 pb-2">
+                <span class="text-xl font-bold mr-3 text-gray-400">+91</span>
+                <input type="number" id="phone" placeholder="Mobile Number" class="bg-transparent text-xl font-bold outline-none w-full">
+            </div>
+            <button onclick="verifyAndDash()" class="w-full bg-[#002970] text-white py-4 rounded-2xl font-bold shadow-lg uppercase tracking-widest text-xs">Verify & Link Bank</button>
+        </div>
+
+        <div id="dash-screen" class="screen hidden overflow-y-auto pb-24">
+            <header class="bg-white p-5 flex justify-between items-center border-b sticky top-0 z-50">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xs">HT</div>
+                    <h1 class="text-lg font-black paytm-blue italic leading-tight">ApnaPay<br><span class="text-[8px] text-gray-400 uppercase tracking-tighter">Himanshu Tiwari</span></h1>
+                </div>
+                <div class="flex gap-4 text-gray-400"><i class="fas fa-search"></i><i class="fas fa-bell"></i></div>
+            </header>
+
+            <div class="p-4 space-y-4">
+                <div class="p-6 apna-gradient rounded-[2.5rem] text-white shadow-xl">
+                    <p class="text-[10px] font-bold opacity-70 uppercase tracking-widest">TiwariX Bank Balance</p>
+                    <h2 class="text-4xl font-black mt-1">₹<span id="main-bal">48,250</span></h2>
+                </div>
+
+                <div class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-gray-800 text-xs mb-6 uppercase tracking-widest">Money Transfer</h3>
+                    <div class="grid grid-cols-4 gap-4 text-center text-[9px] font-black text-gray-500">
+                        <div onclick="openScanner()"><div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-2 text-blue-600 shadow-sm"><i class="fas fa-qrcode"></i></div>SCAN</div>
+                        <div onclick="openFunc('Bank Transfer')"><div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-2 text-blue-600 shadow-sm"><i class="fas fa-university"></i></div>BANK</div>
+                        <div onclick="openFunc('Mobile Pay')"><div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-2 text-blue-600 shadow-sm"><i class="fas fa-mobile-alt"></i></div>MOBILE</div>
+                        <div onclick="alert('No History Found')"><div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-2 text-blue-600 shadow-sm"><i class="fas fa-history"></i></div>HISTORY</div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100">
+                    <h3 class="font-bold text-gray-800 text-xs mb-6 uppercase tracking-widest italic">TiwariX Services</h3>
+                    <div class="grid grid-cols-4 gap-4 text-center text-[9px] font-black text-gray-400 uppercase">
+                        <div onclick="openFunc('Mobile Recharge')"><i class="fas fa-phone text-2xl text-blue-500 mb-2"></i>RECHARGE</div>
+                        <div onclick="openFunc('Electricity Bill')"><i class="fas fa-lightbulb text-2xl text-yellow-500 mb-2"></i>BILLS</div>
+                        <div onclick="alert('Coming Soon')"><i class="fas fa-train text-2xl text-orange-500 mb-2 opacity-30"></i>TICKETS</div>
+                        <div onclick="alert('Coming Soon')"><i class="fas fa-shield-halved text-2xl text-green-500 mb-2 opacity-30"></i>INSURE</div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-[9px] text-gray-400 font-bold uppercase py-10">TiwariX Web Solution</p>
+        </div>
+
+        <div id="func-screen" class="screen hidden p-8">
+            <i class="fas fa-arrow-left text-xl mb-10 text-gray-700" onclick="goTo('dash-screen')"></i>
+            <div class="flex flex-col items-center">
+                <h2 id="func-title" class="text-2xl font-black paytm-blue uppercase italic">Service</h2>
+                <div class="w-full mt-10 space-y-6">
+                    <input type="text" id="target" placeholder="Enter Details" class="w-full p-5 bg-gray-50 border rounded-2xl outline-none font-bold">
+                    <div class="flex items-center justify-center">
+                        <span class="text-3xl text-gray-300 font-light mr-2">₹</span>
+                        <input type="number" id="payAmt" placeholder="0" class="text-7xl font-black w-44 outline-none text-center bg-transparent paytm-blue">
+                    </div>
+                </div>
+            </div>
+            <button onclick="processPayment()" class="absolute bottom-10 left-8 right-8 bg-[#002970] text-white py-5 rounded-3xl font-black text-xl shadow-2xl">Confirm & Pay</button>
+        </div>
+
+        <div id="success-screen" class="screen hidden flex flex-col items-center justify-center p-8 text-center bg-white">
+            <div class="w-32 h-32 bg-green-500 rounded-full flex items-center justify-center mb-8 shadow-2xl animate-bounce">
+                <i class="fas fa-check text-6xl text-white"></i>
+            </div>
+            <h2 class="text-green-600 text-3xl font-black italic" id="sc-title">Payment Success</h2>
+            <h1 class="text-7xl font-black mt-4 text-[#002970]">₹<span id="final-amt">0</span></h1>
+            <div class="w-full mt-10 p-6 bg-gray-50 rounded-[2.5rem] border border-gray-100 text-left text-[10px] font-black text-gray-400 uppercase space-y-3">
+                <div class="flex justify-between border-b pb-2"><span>Ref No</span><span class="text-gray-900" id="txn"></span></div>
+                <div class="flex justify-between border-b pb-2"><span>OWNED BY</span><span class="text-blue-600">Himanshu Tiwari</span></div>
+                <div class="flex justify-between"><span>Vendor</span><span class="text-gray-900 italic">TiwariX Solutions</span></div>
+            </div>
+            <button onclick="location.reload()" class="mt-auto mb-10 text-blue-600 font-black border-2 border-blue-600 px-12 py-4 rounded-full text-xs">EXIT TO HOME</button>
+        </div>
+
+        <div id="scanner-view">
+            <video id="video" autoplay playsinline></video>
+            <div class="scan-box"><div class="scan-line"></div></div>
+            <button onclick="closeScanner()" class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white font-bold text-xs">CANCEL</button>
+        </div>
+
+    </div>
+
+    <script>
+        let balance = 48250;
+        const video = document.getElementById('video');
+
+        function goTo(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function verifyAndDash() {
+            if(document.getElementById('phone').value.length < 10) return alert("Enter 10 digit number");
+            goTo('dash-screen');
+        }
+
+        function openFunc(title) {
+            document.getElementById('func-title').innerText = title;
+            document.getElementById('target').placeholder = "Enter " + title + " Details";
+            document.getElementById('payAmt').value = "";
+            goTo('func-screen');
+        }
+
+        function processPayment() {
+            const amt = parseInt(document.getElementById('payAmt').value);
+            if(!amt || amt <= 0) return alert("Enter Amount");
+            if(amt > balance) return alert("Insufficient TiwariX Balance");
+
+            balance -= amt;
+            document.getElementById('main-bal').innerText = balance.toLocaleString();
+            document.getElementById('final-amt').innerText = amt;
+            document.getElementById('txn').innerText = "TWX" + Math.floor(Math.random()*1000000000);
+            
+            goTo('success-screen');
+            new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3').play();
+        }
+
+        async function openScanner() {
+            document.getElementById('scanner-view').style.display = 'block';
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+                video.srcObject = stream;
+                setTimeout(() => {
+                    closeScanner();
+                    openFunc('Scan Payment');
+                }, 4000);
+            } catch (err) { alert("Camera Denied"); closeScanner(); }
+        }
+
+        function closeScanner() {
+            const stream = video.srcObject;
+            if (stream) stream.getTracks().forEach(t => t.stop());
+            document.getElementById('scanner-view').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
