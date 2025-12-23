@@ -147,57 +147,71 @@
 
     </div>
 
-    <script>
-        let balance = 48250;
-        let coins = 120;
-        const video = document.getElementById('video');
+     <script>
+    let balance = 48250;
+    let coins = 120;
+    const video = document.getElementById('video');
 
-        function goTo(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
-        }
+    function goTo(id) {
+        // Sabhi screens ko chupao
+        document.querySelectorAll('.screen').forEach(s => {
+            s.classList.add('hidden');
+            s.style.display = 'none';
+        });
+        // Sirf target screen dikhao
+        const target = document.getElementById(id);
+        target.classList.remove('hidden');
+        target.style.display = 'flex'; // Ya 'block' dashboard ke liye
+        if(id === 'dash-page') target.style.display = 'block';
+    }
 
-        function showFunc(title) {
-            document.getElementById('func-title').innerText = title;
-            document.getElementById('payAmt').value = "";
-            goTo('func-page');
-        }
+    function showFunc(title) {
+        document.getElementById('func-title').innerText = title;
+        document.getElementById('payAmt').value = "";
+        document.getElementById('target').value = "";
+        goTo('func-page');
+    }
 
-        function handlePay() {
-            const val = parseInt(document.getElementById('payAmt').value);
-            if(!val || val <= 0) return alert("Please enter valid amount");
-            if(val > balance) return alert("Insufficient TiwariX Balance");
+    function handlePay() {
+        const val = parseInt(document.getElementById('payAmt').value);
+        if(!val || val <= 0) return alert("Please enter valid amount");
+        if(val > balance) return alert("Insufficient TiwariX Balance");
 
-            balance -= val;
-            coins += 5;
-            
-            document.getElementById('bal-val').innerText = balance.toLocaleString();
-            document.getElementById('coins').innerText = coins;
-            document.getElementById('finalAmt').innerText = val.toLocaleString();
-            document.getElementById('txn').innerText = "TWX" + Math.floor(Math.random()*1000000000);
-            
-            // Adding to history list
-            const historyItem = `<div class="flex justify-between items-center"><div class="flex gap-3 items-center"><div class="w-8 h-8 bg-red-50 rounded-full flex items-center justify-center text-red-600"><i class="fas fa-arrow-up text-[10px]"></i></div><div><p class="text-[10px] font-black">${document.getElementById('func-title').innerText}</p><p class="text-[8px] text-gray-400">Just Now</p></div></div><p class="text-[10px] font-black text-red-500">- ₹${val}</p></div>`;
-            document.getElementById('history-list').insertAdjacentHTML('afterbegin', historyItem);
+        balance -= val;
+        coins += 5;
+        
+        document.getElementById('bal-val').innerText = balance.toLocaleString();
+        document.getElementById('coins').innerText = coins;
+        document.getElementById('finalAmt').innerText = val.toLocaleString();
+        document.getElementById('txn').innerText = "TWX" + Math.floor(Math.random()*1000000000);
+        
+        // History update
+        const historyItem = `<div class="flex justify-between items-center border-b pb-2"><div class="flex gap-3 items-center"><div class="w-8 h-8 bg-red-50 rounded-full flex items-center justify-center text-red-600"><i class="fas fa-arrow-up text-[10px]"></i></div><div><p class="text-[10px] font-black">${document.getElementById('func-title').innerText}</p><p class="text-[8px] text-gray-400">Just Now</p></div></div><p class="text-[10px] font-black text-red-500">- ₹${val}</p></div>`;
+        document.getElementById('history-list').insertAdjacentHTML('afterbegin', historyItem);
 
-            goTo('success-page');
-            new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3').play();
-        }
+        goTo('success-page');
+        new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3').play();
+    }
 
-        async function openScanner() {
-            document.getElementById('scanner-view').style.display = 'block';
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-                video.srcObject = stream;
-                setTimeout(() => { closeScanner(); showFunc('Scanner Pay'); }, 4000);
-            } catch (err) { alert("Camera Permission Required"); closeScanner(); }
-        }
+    async function openScanner() {
+        document.getElementById('scanner-view').style.display = 'block';
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+            video.srcObject = stream;
+            setTimeout(() => { 
+                closeScanner(); 
+                showFunc('Scanner Pay'); 
+            }, 4000);
+        } catch (err) { alert("Camera Permission Required"); closeScanner(); }
+    }
 
-        function closeScanner() {
-            const stream = video.srcObject;
-            if (stream) stream.getTracks().forEach(t => t.stop());
-            document.getElementById('scanner-view').style.display = 'none';
-        }
-    </script>
+    function closeScanner() {
+        const stream = video.srcObject;
+        if (stream) stream.getTracks().forEach(t => t.stop());
+        document.getElementById('scanner-view').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>
+
