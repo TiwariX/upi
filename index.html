@@ -3,133 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ApnaPay Wallet - TiwariX</title>
+    <title>Himanshu Wallet - TiwariX</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { background-color: #0f172a; font-family: 'Inter', sans-serif; display: flex; justify-content: center; margin: 0; overflow: hidden; }
         .app-container { width: 100%; max-width: 420px; height: 100vh; background: #f8fafc; position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
-        
-        /* Fixed Screen Logic */
-        .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f8fafc; z-index: 10; display: none; overflow-y: auto; }
-        .active-screen { display: block !important; }
-        
-        /* Flex screens for Login/Success */
-        .flex-screen { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .flex-screen.active-screen { display: flex !important; }
-
-        .paytm-blue { color: #002970; }
-        .apna-gradient { background: linear-gradient(135deg, #00baf2 0%, #002970 100%); }
-        .virtual-card { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 28px; padding: 24px; color: white; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-        
+        .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f8fafc; z-index: 10; display: none; flex-direction: column; overflow-y: auto; }
+        .active-screen { display: flex !important; }
+        .brand-blue { color: #002970; }
+        .brand-gradient { background: linear-gradient(135deg, #00baf2 0%, #002970 100%); }
+        .virtual-card { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 28px; padding: 24px; color: white; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; }
         #scanner-view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: none; }
         video { width: 100%; height: 100%; object-fit: cover; }
         .scan-box { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 260px; height: 260px; border: 2px solid #00baf2; border-radius: 30px; box-shadow: 0 0 0 2000px rgba(0,0,0,0.7); }
     </style>
 </head>
 <body>
-
     <div class="app-container">
-        
-        <div id="login-page" class="screen flex-screen active-screen p-10">
-            <div class="w-20 h-20 apna-gradient rounded-[2rem] flex items-center justify-center mb-6 shadow-2xl">
-                <i class="fas fa-fingerprint text-white text-4xl"></i>
-            </div>
-            <h1 class="text-3xl font-black paytm-blue italic">Apna<span class="text-sky-500">Wallet</span></h1>
-            <p class="text-gray-400 text-[10px] font-bold tracking-widest mt-1 mb-12 uppercase">TiwariX Web Solution</p>
+        <div id="login-page" class="screen active-screen items-center justify-center p-10 text-center">
+            <div class="w-20 h-20 brand-gradient rounded-[2.5rem] flex items-center justify-center mb-6 shadow-2xl"><i class="fas fa-wallet text-white text-4xl"></i></div>
+            <h1 class="text-3xl font-black brand-blue italic leading-none">Himanshu<span class="text-sky-500">Wallet</span></h1>
+            <p class="text-gray-400 text-[10px] font-bold tracking-widest mt-2 mb-12 uppercase">TiwariX Web Solution</p>
             <input type="text" id="user" placeholder="Enter Username" class="w-full p-5 bg-gray-50 border rounded-2xl mb-4 outline-none font-bold text-[#002970]">
             <button onclick="goTo('dash-page')" class="w-full bg-[#002970] text-white py-5 rounded-2xl font-black shadow-xl">Secure Access</button>
+            <p class="mt-20 text-[9px] text-gray-400 font-bold uppercase">Himanshu Tiwari Portfolio</p>
         </div>
 
-        <div id="dash-page" class="screen pb-24">
+        <div id="dash-page" class="screen">
             <header class="bg-white p-5 flex justify-between items-center border-b sticky top-0 z-50">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white font-bold border-2 border-blue-500">HT</div>
-                    <h1 class="text-lg font-black paytm-blue italic">ApnaPay</h1>
+                    <h1 class="text-lg font-black brand-blue italic">Himanshu Wallet</h1>
                 </div>
-                <div class="flex items-center gap-2 bg-yellow-100 px-3 py-1 rounded-full">
-                    <i class="fas fa-coins text-yellow-600 text-[10px]"></i>
-                    <span id="coins" class="text-[10px] font-black text-yellow-700">120</span>
-                </div>
+                <div class="bg-yellow-100 px-3 py-1 rounded-full"><span id="coins" class="text-[10px] font-black text-yellow-700">120 Coins</span></div>
             </header>
-
             <div class="p-5 space-y-6">
                 <div class="virtual-card">
-                    <div class="flex justify-between items-start mb-10">
-                        <div class="w-12 h-8 bg-yellow-500 rounded shadow-inner"></div>
-                        <p class="font-black text-[10px] italic">TIWARIX PLATINUM</p>
-                    </div>
+                    <div class="flex justify-between items-start mb-10"><div class="w-12 h-8 bg-yellow-500 rounded shadow-inner"></div><p class="font-black text-[10px] italic">TIWARIX PLATINUM</p></div>
                     <p class="text-[9px] opacity-50 uppercase tracking-widest font-bold">Wallet Balance</p>
                     <h2 class="text-4xl font-bold mt-1">₹<span id="bal-val">48,250</span></h2>
-                    <div class="mt-8 flex justify-between items-end">
-                        <p class="text-sm font-black tracking-widest uppercase">Himanshu Tiwari</p>
-                        <i class="fab fa-cc-visa text-3xl opacity-30"></i>
-                    </div>
+                    <div class="mt-8 flex justify-between items-end"><p class="text-sm font-black tracking-widest uppercase">Himanshu Tiwari</p><i class="fab fa-cc-visa text-3xl opacity-30"></i></div>
                 </div>
-
-                <div class="grid grid-cols-4 gap-4">
-                    <div onclick="openScanner()" class="cursor-pointer"><div class="aspect-square bg-white rounded-2xl shadow-sm border flex items-center justify-center text-blue-600"><i class="fas fa-qrcode text-xl"></i></div><p class="text-[9px] font-black mt-2 text-center text-gray-500 uppercase">Scan</p></div>
-                    <div onclick="showFunc('Transfer')" class="cursor-pointer"><div class="aspect-square bg-white rounded-2xl shadow-sm border flex items-center justify-center text-green-600"><i class="fas fa-paper-plane text-xl"></i></div><p class="text-[9px] font-black mt-2 text-center text-gray-500 uppercase">Send</p></div>
-                    <div onclick="showFunc('Recharge')" class="cursor-pointer"><div class="aspect-square bg-white rounded-2xl shadow-sm border flex items-center justify-center text-orange-500"><i class="fas fa-mobile-screen text-xl"></i></div><p class="text-[9px] font-black mt-2 text-center text-gray-500 uppercase">Mobile</p></div>
-                    <div onclick="alert('Added Coming Soon')" class="cursor-pointer"><div class="aspect-square bg-white rounded-2xl shadow-sm border flex items-center justify-center text-purple-600"><i class="fas fa-plus text-xl"></i></div><p class="text-[9px] font-black mt-2 text-center text-gray-500 uppercase">Add</p></div>
-                </div>
-
-                <div class="bg-white rounded-[2rem] p-6 shadow-sm border">
-                    <h3 class="font-black text-gray-800 text-xs mb-4 uppercase tracking-widest">Recent Activity</h3>
-                    <div id="history-list" class="space-y-4">
-                        </div>
+                <div class="grid grid-cols-4 gap-4 text-center">
+                    <div onclick="openScanner()"><div class="aspect-square bg-white rounded-2xl shadow-sm border flex items-center justify-center text-blue-600"><i class="fas fa-qrcode text-xl"></i></div><p class="text-[9px] font-black mt-2 text-gray-500">SCAN</p></div>
+                    <div onclick="showFunc('Transfer')"><div class="aspect-square bg-white rounded-2xl shadow-sm border flex items-center justify-center text-green-600"><i class="fas fa-university text-xl"></i></div><p class="text-[9px] font-black mt-2 text-gray-500">BANK</p></div>
+                    <div onclick="showFunc('Recharge')"><div class="aspect-square bg-white rounded-2xl shadow-sm border flex items-center justify-center text-orange-500"><i class="fas fa-mobile-screen text-xl"></i></div><p class="text-[9px] font-black mt-2 text-gray-500">RECHARGE</p></div>
+                    <div onclick="alert('History is Empty')"><div class="aspect-square bg-white rounded-2xl shadow-sm border flex items-center justify-center text-purple-600"><i class="fas fa-history text-xl"></i></div><p class="text-[9px] font-black mt-2 text-gray-500">HISTORY</p></div>
                 </div>
             </div>
         </div>
 
-        <div id="func-page" class="screen p-8">
-            <div class="flex flex-col h-full">
-                <i class="fas fa-arrow-left text-xl text-[#002970] mb-10 cursor-pointer" onclick="goTo('dash-page')"></i>
-                <div class="flex flex-col items-center flex-1">
-                    <h2 id="func-title" class="text-xl font-black paytm-blue uppercase italic">Transfer</h2>
-                    <input type="text" id="target" placeholder="Recipient ID" class="w-full mt-10 p-5 bg-gray-50 border-none rounded-2xl text-center font-bold">
-                    <div class="mt-10 flex items-center">
-                        <span class="text-2xl text-gray-300 mr-2">₹</span>
-                        <input type="number" id="payAmt" placeholder="0" class="text-7xl font-black w-48 outline-none text-center bg-transparent paytm-blue">
-                    </div>
+        <div id="func-page" class="screen p-8 justify-between">
+            <div>
+                <i class="fas fa-arrow-left text-xl text-[#002970] mb-10" onclick="goTo('dash-page')"></i>
+                <div class="flex flex-col items-center mt-10">
+                    <h2 id="func-title" class="text-xl font-black brand-blue uppercase italic">Transfer</h2>
+                    <input type="number" id="payAmt" placeholder="0" class="text-7xl font-black w-48 outline-none text-center bg-transparent brand-blue mt-20">
                 </div>
-                <button onclick="handlePay()" class="w-full bg-[#002970] text-white py-5 rounded-[2rem] font-black text-xl shadow-2xl mt-4">Confirm Pay</button>
             </div>
+            <button onclick="handlePay()" class="w-full bg-[#002970] text-white py-5 rounded-[2rem] font-black text-xl shadow-2xl mb-4">Pay Now</button>
         </div>
 
-        <div id="success-page" class="screen flex-screen p-8 bg-white">
-            <div class="w-32 h-32 bg-green-500 rounded-full flex items-center justify-center mb-8 shadow-2xl animate-bounce">
-                <i class="fas fa-check text-6xl text-white"></i>
-            </div>
+        <div id="success-page" class="screen p-8 items-center justify-center text-center bg-white">
+            <div class="w-32 h-32 bg-green-500 rounded-full flex items-center justify-center mb-8 shadow-2xl animate-bounce"><i class="fas fa-check text-6xl text-white"></i></div>
             <h2 class="text-green-600 text-3xl font-black italic uppercase">Sent Successfully</h2>
             <h1 class="text-7xl font-black mt-4 text-[#002970]">₹<span id="finalAmt">0</span></h1>
             <div class="w-full mt-10 p-8 bg-gray-50 rounded-[2.5rem] border text-left text-[10px] font-black text-gray-400 uppercase space-y-3">
                 <div class="flex justify-between"><span>Reference</span><span class="text-gray-900" id="txn"></span></div>
                 <div class="flex justify-between"><span>Owner</span><span class="text-blue-600">Himanshu Tiwari</span></div>
             </div>
-            <button onclick="goTo('dash-page')" class="mt-10 w-full bg-[#002970] text-white py-4 rounded-full font-black uppercase text-xs tracking-widest shadow-lg">Back to Wallet</button>
+            <button onclick="goTo('dash-page')" class="mt-10 w-full bg-[#002970] text-white py-4 rounded-full font-black uppercase text-xs tracking-widest shadow-lg">Back to Home</button>
         </div>
 
         <div id="scanner-view">
-            <video id="video" autoplay playsinline></video>
+            <video id="video" autoplay playsinline muted></video>
             <div class="scan-box"></div>
-            <button onclick="closeScanner()" class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white font-black text-xs border px-6 py-2 rounded-full uppercase">Exit</button>
+            <button onclick="closeScanner()" class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white border px-6 py-2 rounded-full font-bold text-xs">EXIT</button>
         </div>
-
     </div>
 
     <script>
         let balance = 48250;
-        let coins = 120;
         const video = document.getElementById('video');
 
         function goTo(id) {
-            // Hide all screens
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
-            // Show target
             document.getElementById(id).classList.add('active-screen');
-            // Scroll to top
-            document.getElementById(id).scrollTop = 0;
         }
 
         function showFunc(title) {
@@ -141,21 +101,12 @@
         function handlePay() {
             const val = parseInt(document.getElementById('payAmt').value);
             if(!val || val <= 0) return alert("Enter amount");
-            if(val > balance) return alert("Insufficient Balance");
-
             balance -= val;
-            coins += 5;
-            
             document.getElementById('bal-val').innerText = balance.toLocaleString();
-            document.getElementById('coins').innerText = coins;
             document.getElementById('finalAmt').innerText = val.toLocaleString();
-            document.getElementById('txn').innerText = "TWX" + Math.floor(Math.random()*99999999);
-            
-            const historyItem = `<div class="flex justify-between items-center border-b pb-2"><div class="flex gap-3 items-center"><div class="w-8 h-8 bg-red-50 rounded-full flex items-center justify-center text-red-600"><i class="fas fa-arrow-up text-[10px]"></i></div><div><p class="text-[10px] font-black uppercase">${document.getElementById('func-title').innerText}</p><p class="text-[8px] text-gray-400">Just Now</p></div></div><p class="text-[10px] font-black text-red-500">- ₹${val}</p></div>`;
-            document.getElementById('history-list').insertAdjacentHTML('afterbegin', historyItem);
-
+            document.getElementById('txn').innerText = "HTW" + Math.floor(Math.random()*99999999);
             goTo('success-page');
-            new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3').play();
+            try { new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3').play(); } catch(e){}
         }
 
         async function openScanner() {
@@ -164,7 +115,7 @@
                 const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
                 video.srcObject = stream;
                 setTimeout(() => { closeScanner(); showFunc('Scanner Pay'); }, 3000);
-            } catch (err) { alert("Camera Error"); closeScanner(); }
+            } catch (err) { alert("Camera Access Error. Please host on Netlify (HTTPS) and allow permissions."); closeScanner(); }
         }
 
         function closeScanner() {
@@ -175,4 +126,3 @@
     </script>
 </body>
 </html>
-
