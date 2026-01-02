@@ -1,128 +1,239 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Himanshu Wallet - TiwariX</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { background-color: #0f172a; font-family: 'Inter', sans-serif; display: flex; justify-content: center; margin: 0; overflow: hidden; }
-        .app-container { width: 100%; max-width: 420px; height: 100vh; background: #f8fafc; position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
-        .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f8fafc; z-index: 10; display: none; flex-direction: column; overflow-y: auto; }
-        .active-screen { display: flex !important; }
-        .brand-blue { color: #002970; }
-        .brand-gradient { background: linear-gradient(135deg, #00baf2 0%, #002970 100%); }
-        .virtual-card { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 28px; padding: 24px; color: white; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; }
-        #scanner-view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: none; }
-        video { width: 100%; height: 100%; object-fit: cover; }
-        .scan-box { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 260px; height: 260px; border: 2px solid #00baf2; border-radius: 30px; box-shadow: 0 0 0 2000px rgba(0,0,0,0.7); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeWithTiwariJi | Ultimate Learning Hub</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<style>
+    :root {
+        --primary: #38bdf8;
+        --secondary: #e1306c;
+        --bg: #020617;
+        --card-bg: rgba(30, 41, 59, 0.7);
+    }
+
+    body { 
+        margin: 0; 
+        font-family: 'Poppins', sans-serif; 
+        background: radial-gradient(circle at top, #0f172a, #020617); 
+        color: #ffffff; 
+        overflow-x: hidden;
+    }
+
+    /* Animated Header */
+    header { 
+        padding: 80px 20px; 
+        text-align: center; 
+        background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1500&q=80') center/cover;
+        position: relative;
+    }
+    header::before { content: ""; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(2, 6, 23, 0.8); }
+    
+    .header-content { position: relative; z-index: 1; }
+    .header-content h1 { font-size: 3.5rem; margin: 0; color: var(--primary); text-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
+
+    /* Glassmorphism Navigation */
+    nav { 
+        background: rgba(15, 23, 42, 0.8); 
+        backdrop-filter: blur(10px); 
+        padding: 15px; 
+        text-align: center; 
+        position: sticky; 
+        top: 0; 
+        z-index: 100; 
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: 600; transition: 0.3s; }
+    nav a:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+
+    /* Cards with Animation */
+    section { 
+        margin: 50px auto; 
+        max-width: 900px; 
+        padding: 40px; 
+        background: var(--card-bg); 
+        backdrop-filter: blur(12px);
+        border-radius: 24px; 
+        border: 1px solid rgba(255,255,255,0.1);
+        transition: 0.5s;
+        animation: fadeInUp 1s;
+    }
+    section:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+
+    .insta-badge {
+        background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        padding: 10px 20px;
+        border-radius: 50px;
+        color: white;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    /* Floating Action Button */
+    .fab-insta {
+        position: fixed; bottom: 30px; right: 30px;
+        width: 60px; height: 60px; background: var(--secondary);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        color: white; font-size: 30px; box-shadow: 0 10px 20px rgba(225, 48, 108, 0.4);
+        z-index: 1000; transition: 0.3s;
+    }
+    .fab-insta:hover { transform: rotate(360deg) scale(1.1); }
+
+    /* Document Viewer Styling */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); overflow-y: auto; }
+    .modal-content { 
+        background: white; color: #1e293b; margin: 30px auto; padding: 60px; width: 90%; max-width: 900px; border-radius: 20px; 
+        animation: zoomIn 0.4s;
+    }
+    
+    .doc-chapter { margin-bottom: 40px; padding: 20px; border-radius: 15px; background: #f1f5f9; border-left: 8px solid var(--primary); }
+    .code-dark { background: #1e293b; color: #7dd3fc; padding: 20px; border-radius: 12px; font-family: 'Fira Code', monospace; margin: 15px 0; }
+
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+</style>
 </head>
 <body>
-    <div class="app-container">
-        <div id="login-page" class="screen active-screen items-center justify-center p-10 text-center">
-            <div class="w-20 h-20 brand-gradient rounded-[2.5rem] flex items-center justify-center mb-6 shadow-2xl"><i class="fas fa-wallet text-white text-4xl"></i></div>
-            <h1 class="text-3xl font-black brand-blue italic leading-none">Himanshu<span class="text-sky-500">Wallet</span></h1>
-            <p class="text-gray-400 text-[10px] font-bold tracking-widest mt-2 mb-12 uppercase">TiwariX Web Solution</p>
-            <input type="text" id="user" placeholder="Enter Username" class="w-full p-5 bg-gray-50 border rounded-2xl mb-4 outline-none font-bold text-[#002970]">
-            <button onclick="goTo('dash-page')" class="w-full bg-[#002970] text-white py-5 rounded-2xl font-black shadow-xl">Secure Access</button>
-            <p class="mt-20 text-[9px] text-gray-400 font-bold uppercase">Himanshu Tiwari Portfolio</p>
-        </div>
 
-        <div id="dash-page" class="screen">
-            <header class="bg-white p-5 flex justify-between items-center border-b sticky top-0 z-50">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white font-bold border-2 border-blue-500">HT</div>
-                    <h1 class="text-lg font-black brand-blue italic">Himanshu Wallet</h1>
-                </div>
-                <div class="bg-yellow-100 px-3 py-1 rounded-full"><span id="coins" class="text-[10px] font-black text-yellow-700">120 Coins</span></div>
-            </header>
-            <div class="p-5 space-y-6">
-                <div class="virtual-card">
-                    <div class="flex justify-between items-start mb-10"><div class="w-12 h-8 bg-yellow-500 rounded shadow-inner"></div><p class="font-black text-[10px] italic">TIWARIX PLATINUM</p></div>
-                    <p class="text-[9px] opacity-50 uppercase tracking-widest font-bold">Wallet Balance</p>
-                    <h2 class="text-4xl font-bold mt-1">₹<span id="bal-val">48,250</span></h2>
-                    <div class="mt-8 flex justify-between items-end"><p class="text-sm font-black tracking-widest uppercase">Himanshu Tiwari</p><i class="fab fa-cc-visa text-3xl opacity-30"></i></div>
-                </div>
-                <div class="grid grid-cols-4 gap-4 text-center">
-                    <div onclick="openScanner()"><div class="aspect-square bg-white rounded-2xl shadow-sm border flex items-center justify-center text-blue-600"><i class="fas fa-qrcode text-xl"></i></div><p class="text-[9px] font-black mt-2 text-gray-500">SCAN</p></div>
-                    <div onclick="showFunc('Transfer')"><div class="aspect-square bg-white rounded-2xl shadow-sm border flex items-center justify-center text-green-600"><i class="fas fa-university text-xl"></i></div><p class="text-[9px] font-black mt-2 text-gray-500">BANK</p></div>
-                    <div onclick="showFunc('Recharge')"><div class="aspect-square bg-white rounded-2xl shadow-sm border flex items-center justify-center text-orange-500"><i class="fas fa-mobile-screen text-xl"></i></div><p class="text-[9px] font-black mt-2 text-gray-500">RECHARGE</p></div>
-                    <div onclick="alert('History is Empty')"><div class="aspect-square bg-white rounded-2xl shadow-sm border flex items-center justify-center text-purple-600"><i class="fas fa-history text-xl"></i></div><p class="text-[9px] font-black mt-2 text-gray-500">HISTORY</p></div>
-                </div>
-            </div>
-        </div>
+<a href="https://instagram.com/codewithtiwariji" target="_blank" class="fab-insta">
+    <i class="fab fa-instagram"></i>
+</a>
 
-        <div id="func-page" class="screen p-8 justify-between">
-            <div>
-                <i class="fas fa-arrow-left text-xl text-[#002970] mb-10" onclick="goTo('dash-page')"></i>
-                <div class="flex flex-col items-center mt-10">
-                    <h2 id="func-title" class="text-xl font-black brand-blue uppercase italic">Transfer</h2>
-                    <input type="number" id="payAmt" placeholder="0" class="text-7xl font-black w-48 outline-none text-center bg-transparent brand-blue mt-20">
-                </div>
-            </div>
-            <button onclick="handlePay()" class="w-full bg-[#002970] text-white py-5 rounded-[2rem] font-black text-xl shadow-2xl mb-4">Pay Now</button>
-        </div>
-
-        <div id="success-page" class="screen p-8 items-center justify-center text-center bg-white">
-            <div class="w-32 h-32 bg-green-500 rounded-full flex items-center justify-center mb-8 shadow-2xl animate-bounce"><i class="fas fa-check text-6xl text-white"></i></div>
-            <h2 class="text-green-600 text-3xl font-black italic uppercase">Sent Successfully</h2>
-            <h1 class="text-7xl font-black mt-4 text-[#002970]">₹<span id="finalAmt">0</span></h1>
-            <div class="w-full mt-10 p-8 bg-gray-50 rounded-[2.5rem] border text-left text-[10px] font-black text-gray-400 uppercase space-y-3">
-                <div class="flex justify-between"><span>Reference</span><span class="text-gray-900" id="txn"></span></div>
-                <div class="flex justify-between"><span>Owner</span><span class="text-blue-600">Himanshu Tiwari</span></div>
-            </div>
-            <button onclick="goTo('dash-page')" class="mt-10 w-full bg-[#002970] text-white py-4 rounded-full font-black uppercase text-xs tracking-widest shadow-lg">Back to Home</button>
-        </div>
-
-        <div id="scanner-view">
-            <video id="video" autoplay playsinline muted></video>
-            <div class="scan-box"></div>
-            <button onclick="closeScanner()" class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white border px-6 py-2 rounded-full font-bold text-xs">EXIT</button>
-        </div>
+<header>
+    <div class="header-content animate__animated animate__fadeInDown">
+        <h1>CodeWithTiwariJi</h1>
+        <p>Premium Web Development Roadmap 2026</p>
+        <a href="https://instagram.com/codewithtiwariji" target="_blank" class="insta-badge">
+            <i class="fab fa-instagram"></i> Follow @codewithtiwariji
+        </a>
     </div>
+</header>
 
-    <script>
-        let balance = 48250;
-        const video = document.getElementById('video');
+<nav>
+    <a href="#html"><i class="fab fa-html5"></i> HTML</a>
+    <a href="#css"><i class="fab fa-css3-alt"></i> CSS</a>
+    <a href="#js"><i class="fab fa-js"></i> JavaScript</a>
+</nav>
 
-        function goTo(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
-            document.getElementById(id).classList.add('active-screen');
-        }
+<section id="html">
+    <h2><i class="fab fa-html5" style="color:#e34c26"></i> HTML Complete Encyclopedia</h2>
+    [span_6](start_span)[span_7](start_span)<p>Learn the structural foundation of the web[span_6](end_span)[span_7](end_span). [span_8](start_span)[span_9](start_span)From basic tags to HTML5 Semantic SEO[span_8](end_span)[span_9](end_span).</p>
+    <div class="btn-group">
+        <button class="view-btn" onclick="openDoc('html')" style="background: var(--primary); color: #000;">📖 Open Full Course</button>
+        <button class="down-btn" onclick="downloadDoc('html')">📥 Download Notes</button>
+    </div>
+</section>
 
-        function showFunc(title) {
-            document.getElementById('func-title').innerText = title;
-            document.getElementById('payAmt').value = "";
-            goTo('func-page');
-        }
+<section id="css">
+    <h2><i class="fab fa-css3-alt" style="color:#264de4"></i> CSS Styling Mastery</h2>
+    <p>Master Flexbox, Grid, and Modern UI Animations. Make your website look stunning.</p>
+    <div class="btn-group">
+        <button class="view-btn" onclick="openDoc('css')" style="background: var(--primary); color: #000;">🎨 View Design Book</button>
+        <button class="down-btn" onclick="downloadDoc('css')">📥 Download PDF</button>
+    </div>
+</section>
 
-        function handlePay() {
-            const val = parseInt(document.getElementById('payAmt').value);
-            if(!val || val <= 0) return alert("Enter amount");
-            balance -= val;
-            document.getElementById('bal-val').innerText = balance.toLocaleString();
-            document.getElementById('finalAmt').innerText = val.toLocaleString();
-            document.getElementById('txn').innerText = "HTW" + Math.floor(Math.random()*99999999);
-            goTo('success-page');
-            try { new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3').play(); } catch(e){}
-        }
+<section id="js">
+    <h2><i class="fab fa-js" style="color:#f7df1e"></i> JavaScript Logic Bible</h2>
+    <p>DOM, APIs, ES6+, and Logic building. Become a developer, not just a coder.</p>
+    <div class="btn-group">
+        <button class="view-btn" onclick="openDoc('js')" style="background: var(--primary); color: #000;">⚡ Open JS Bible</button>
+        <button class="down-btn" onclick="downloadDoc('js')">📥 Download Guide</button>
+    </div>
+</section>
 
-        async function openScanner() {
-            document.getElementById('scanner-view').style.display = 'block';
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-                video.srcObject = stream;
-                setTimeout(() => { closeScanner(); showFunc('Scanner Pay'); }, 3000);
-            } catch (err) { alert("Camera Access Error. Please host on Netlify (HTTPS) and allow permissions."); closeScanner(); }
-        }
+<div id="docModal" class="modal">
+    <span class="close-modal" onclick="closeDoc()" style="position:fixed; right:40px; top:20px; color:white; font-size:50px; cursor:pointer;">&times;</span>
+    <div class="modal-content" id="modalContent"></div>
+</div>
 
-        function closeScanner() {
-            const stream = video.srcObject;
-            if (stream) stream.getTracks().forEach(t => t.stop());
-            document.getElementById('scanner-view').style.display = 'none';
-        }
-    </script>
+<footer>
+    <p>© 2026 CodeWithTiwariJi | Design with ❤️ for Developers</p>
+</footer>
+
+<script>
+const megaData = {
+    html: {
+        title: "HTML Complete Mastery",
+        content: `
+            <h1 style="text-align:center; color:#0f172a;">HTML Zero to Hero Guide</h1>
+            <div class="doc-chapter">
+                [span_10](start_span)<h3>Chapter 1: The Skeleton[span_10](end_span)</h3>
+                [span_11](start_span)<p>HTML markup language hai jo content ko structure deti hai[span_11](end_span).</p>
+                [span_12](start_span)
+            </div>
+            <div class="doc-chapter">
+                <h3>Chapter 2: Semantic HTML5[span_12](end_span)</h3>
+                [span_13](start_span)<p>Use &lt;main&gt;, &lt;section&gt;, and &lt;article&gt; for better SEO[span_13](end_span).</p>
+                
+            </div>
+            <div class="doc-chapter">
+                [span_14](start_span)[span_15](start_span)<h3>Chapter 3: Forms & Multimedia[span_14](end_span)[span_15](end_span)</h3>
+                [span_16](start_span)[span_17](start_span)<p>Images, Audio, and Video ko integrate karna seekhein[span_16](end_span)[span_17](end_span).</p>
+                <div class="code-dark">&lt;video src="clip.mp4" controls&gt;&lt;/video&gt;</div>
+            </div>
+        `
+    },
+    css: {
+        title: "CSS Design Excellence",
+        content: `
+            <h1 style="text-align:center;">CSS Mastery Book</h1>
+            <div class="doc-chapter">
+                <h3>Chapter 1: The Box Model</h3>
+                [span_18](start_span)<p>Margin, Border, Padding, and Content[span_18](end_span).</p>
+                
+            </div>
+            <div class="doc-chapter">
+                <h3>Chapter 2: Responsive Design</h3>
+                <p>Flexbox aur Media Queries ka use karke mobile-friendly site banayein.</p>
+                
+            </div>
+        `
+    },
+    js: {
+        title: "JS Logic Bible",
+        content: `
+            <h1 style="text-align:center;">JavaScript Essentials</h1>
+            <div class="doc-chapter">
+                <h3>Chapter 1: DOM Manipulation</h3>
+                <p>HTML elements ko real-time mein change karein.</p>
+            </div>
+            <div class="doc-chapter">
+                <h3>Chapter 2: Modern ES6+</h3>
+                <p>Arrow functions, Promises, aur Async/Await.</p>
+                
+            </div>
+        `
+    }
+};
+
+function openDoc(type) {
+    const modal = document.getElementById("docModal");
+    const container = document.getElementById("modalContent");
+    container.innerHTML = megaData[type].content + `<div style="text-align:center; margin-top:50px; border-top:1px solid #ddd; padding-top:20px;">Follow <b>@codewithtiwariji</b> on Instagram for more!</div>`;
+    modal.style.display = "block";
+    document.body.style.overflow = "hidden";
+}
+
+function closeDoc() {
+    document.getElementById("docModal").style.display = "none";
+    document.body.style.overflow = "auto";
+}
+
+function downloadDoc(type) {
+    alert("Downloading " + megaData[type].title + "...");
+}
+
+window.onclick = function(event) {
+    if (event.target == document.getElementById("docModal")) closeDoc();
+}
+</script>
 </body>
 </html>
+
