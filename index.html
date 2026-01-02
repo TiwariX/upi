@@ -4,27 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeWithTiwariJi | Full Stack Mastery</title>
+    <title>CodeWithTiwariJi | Ultimate Web Roadmap</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primary: #38bdf8; --insta: #e1306c; --bg: #020617; --card: #1e293b; }
         * { box-sizing: border-box; }
         body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; line-height: 1.6; }
 
-        /* Header & Nav */
+        /* Header Styling */
         header { padding: 60px 20px; text-align: center; border-bottom: 3px solid var(--primary); background: #020617; }
-        header h1 { font-size: 3rem; margin: 0; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
+        header h1 { font-size: 2.8rem; margin: 0; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
         .insta-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 15px; background: var(--insta); color: white; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: 0.3s; }
         .insta-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(225, 48, 108, 0.4); }
 
+        /* Navigation */
         nav { background: var(--card); padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        nav a { color: white; margin: 0 20px; text-decoration: none; font-weight: bold; font-size: 1.1rem; }
+        nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; font-size: 1.1rem; }
+        nav a:hover { color: var(--primary); }
 
-        /* Sections */
-        section { max-width: 850px; margin: 40px auto; padding: 35px; background: var(--card); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
-        section:hover { border-color: var(--primary); transform: translateY(-5px); }
+        /* Main Section Cards */
+        section { max-width: 850px; margin: 40px auto; padding: 35px; background: var(--card); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
         h2 { color: var(--primary); font-size: 1.8rem; margin-top: 0; }
-
         .btn-group { display: flex; gap: 15px; margin-top: 25px; }
         button { flex: 1; padding: 15px; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .view-btn { background: var(--primary); color: #020617; }
@@ -32,13 +32,13 @@
 
         /* Professional Modal */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); overflow-y: auto; }
-        .modal-content { background: white; color: #1e293b; margin: 30px auto; padding: 50px; width: 95%; max-width: 850px; border-radius: 15px; box-shadow: 0 0 50px rgba(0,0,0,0.5); position: relative; }
+        .modal-content { background: white; color: #1e293b; margin: 30px auto; padding: 40px; width: 95%; max-width: 850px; border-radius: 15px; position: relative; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
         .close-btn { position: fixed; right: 30px; top: 20px; color: var(--primary); font-size: 55px; cursor: pointer; font-weight: bold; z-index: 1100; }
 
-        /* Chapter Styling */
+        /* Document Styling */
         .chapter { background: #f8fafc; padding: 25px; border-radius: 12px; margin-bottom: 30px; border-left: 6px solid var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .chapter h3 { color: #020617; margin-top: 0; font-size: 1.5rem; }
-        .code-box { background: #1e293b; color: #7dd3fc; padding: 20px; border-radius: 10px; font-family: 'Consolas', monospace; overflow-x: auto; margin: 15px 0; font-size: 0.95rem; }
+        .code-box { background: #1e293b; color: #7dd3fc; padding: 20px; border-radius: 10px; font-family: 'Consolas', monospace; overflow-x: auto; margin: 15px 0; }
         
         footer { text-align: center; padding: 50px; color: #64748b; background: #020617; }
     </style>
@@ -59,8 +59,8 @@
 </nav>
 
 <section id="html">
-    <h2><i class="fab fa-html5"></i> HTML: Ultimate Encyclopedia</h2>
-    [span_0](start_span)[span_1](start_span)<p>A comprehensive 10-chapter guide covering everything from structure to SEO.[span_0](end_span)[span_1](end_span)</p>
+    <h2><i class="fab fa-html5"></i> HTML: Complete Encyclopedia</h2>
+    <p>Premium 10-chapter roadmap. Isme skeleton se lekar semantic SEO tak sab kuch hai.</p>
     <div class="btn-group">
         <button class="view-btn" onclick="openDoc('html')"><i class="fas fa-book-open"></i> Open Notes</button>
         <button class="down-btn" onclick="downloadDoc('html')"><i class="fas fa-download"></i> Download</button>
@@ -69,7 +69,7 @@
 
 <section id="css">
     <h2><i class="fab fa-css3-alt"></i> CSS: Styling Mastery</h2>
-    <p>Professional styling guide: Box Model, Flexbox, and Advanced Layouts.</p>
+    <p>Learn to design professional websites with Flexbox, Grid, and Modern UI.</p>
     <div class="btn-group">
         <button class="view-btn" onclick="openDoc('css')"><i class="fas fa-palette"></i> View Design Guide</button>
         <button class="down-btn" onclick="downloadDoc('css')"><i class="fas fa-download"></i> Download</button>
@@ -78,7 +78,7 @@
 
 <section id="js">
     <h2><i class="fab fa-js"></i> JavaScript: Logic Bible</h2>
-    <p>Core JS, DOM manipulation, and Modern ES6 logic for dynamic websites.</p>
+    <p>Master Core JS, DOM Manipulation, and Modern ES6 logic.</p>
     <div class="btn-group">
         <button class="view-btn" onclick="openDoc('js')"><i class="fas fa-code"></i> View Logic Bible</button>
         <button class="down-btn" onclick="downloadDoc('js')"><i class="fas fa-download"></i> Download</button>
@@ -98,74 +98,70 @@
 const megaNotes = {
     html: `
         <h1 style="text-align:center;">HTML Complete Encyclopedia</h1>
-        <p style="text-align:center;">Study Material by @codewithtiwariji</p>
+        <p style="text-align:center;">Course by <b>@codewithtiwariji</b></p>
         <hr>
         <div class="chapter">
             <h3>Chapter 1: What is HTML?</h3>
-            [span_2](start_span)[span_3](start_span)<p>HTML (HyperText Markup Language) stands as the fundamental building block of every website[span_2](end_span)[span_3](end_span). [span_4](start_span)It provides the essential skeleton for web content[span_4](end_span).</p>
+            <p>HTML (HyperText Markup Language) website ka foundation hai. [span_0](start_span)[span_1](start_span)Ye content ko structure deta hai[span_0](end_span)[span_1](end_span).</p>
         </div>
         <div class="chapter">
-            <h3>Chapter 2: File Structure</h3>
-            [span_5](start_span)<p>Every HTML file contains metadata in the &lt;head&gt; and visible content in the &lt;body&gt;[span_5](end_span).</p>
-            
+            <h3>Chapter 2: Essential Tags</h3>
+            [span_2](start_span)[span_3](start_span)<p>Heading tags (&lt;h1&gt;-&lt;h6&gt;), Paragraphs (&lt;p&gt;), aur Links (&lt;a&gt;) core components hain[span_2](end_span)[span_3](end_span).</p>
         </div>
         <div class="chapter">
-            <h3>Chapter 3: Essential Tags</h3>
-            [span_6](start_span)<p>Heading tags range from &lt;h1&gt; to &lt;h6&gt;[span_6](end_span). [span_7](start_span)Paragraphs use the &lt;p&gt; tag[span_7](end_span).</p>
-        </div>
+            <h3>Chapter 3: File Structure</h3>
+            [span_4](start_span)<p>Har page me &lt;!DOCTYPE html&gt;, &lt;html&gt;, &lt;head&gt;, aur &lt;body&gt; zaruri hain[span_4](end_span).</p>
+                    </div>
         <div class="chapter">
-            <h3>Chapter 4: HTML Attributes</h3>
-            [span_8](start_span)[span_9](start_span)<p>Attributes like 'href' for links and 'src' for images provide additional info[span_8](end_span)[span_9](end_span).</p>
+            <h3>Chapter 4: Attributes</h3>
+            [span_5](start_span)<p>Attributes extra info dete hain jaise href (links ke liye) aur src (images ke liye)[span_5](end_span).</p>
         </div>
         <div class="chapter">
             <h3>Chapter 5: HTML Tables</h3>
-            <p>Tables organize data into rows (&lt;tr&gt;) and columns (&lt;td&gt;).</p>
+            <p>Data ko organize karne ke liye tr, th aur td ka use kiya jata hai.</p>
         </div>
         <div class="chapter">
             <h3>Chapter 6: Lists</h3>
-            [span_10](start_span)<p>Use &lt;ul&gt; for bullets and &lt;ol&gt; for numbered lists[span_10](end_span).</p>
+            [span_6](start_span)<p>Ordered (&lt;ol&gt;) aur Unordered (&lt;ul&gt;) lists bullets aur numbers ke liye use hoti hain[span_6](end_span).</p>
         </div>
         <div class="chapter">
-            <h3>Chapter 7: Forms & Inputs</h3>
-            [span_11](start_span)<p>Forms are crucial for collecting user data[span_11](end_span). [span_12](start_span)Input types include text, password, and email[span_12](end_span).</p>
-            
-        </div>
+            <h3>Chapter 7: Forms</h3>
+            [span_7](start_span)<p>User ka data collect karne ke liye forms ka use karein[span_7](end_span). [span_8](start_span)Common input types me text, email, aur password shamil hain[span_8](end_span).</p>
+                    </div>
         <div class="chapter">
             <h3>Chapter 8: Semantic HTML</h3>
-            [span_13](start_span)<p>Modern HTML uses tags like &lt;header&gt;, &lt;main&gt;, and &lt;footer&gt; for SEO[span_13](end_span).</p>
-            
-        </div>
+            [span_9](start_span)<p>SEO ke liye &lt;header&gt;, &lt;main&gt;, aur &lt;footer&gt; jaise tags ka use karein[span_9](end_span).</p>
+                    </div>
         <div class="chapter">
             <h3>Chapter 9: Multimedia</h3>
-            [span_14](start_span)[span_15](start_span)<p>Use &lt;img&gt;, &lt;video&gt;, and &lt;audio&gt; to embed media[span_14](end_span)[span_15](end_span).</p>
+            [span_10](start_span)[span_11](start_span)<p>Use &lt;img&gt;, &lt;video&gt;, and &lt;audio&gt; to embed media[span_10](end_span)[span_11](end_span).</p>
         </div>
         <div class="chapter">
             <h3>Chapter 10: Best Practices</h3>
-            [span_16](start_span)<p>Follow HTML5 standards and keep your code clean for better performance[span_16](end_span).</p>
+            [span_12](start_span)<p>HTML5 standards follow karein aur apne code ko clean rakhein[span_12](end_span).</p>
         </div>
     `,
     css: `
         <h1 style="text-align:center;">CSS Design Excellence</h1>
         <div class="chapter">
             <h3>Chapter 1: The Box Model</h3>
-            <p>Every element is a box consisting of Content, Padding, Border, and Margin.</p>
-            
-        </div>
+            <p>Har element Content, Padding, Border, aur Margin se banta hai.</p>
+                    </div>
         <div class="chapter">
             <h3>Chapter 2: Flexbox & Layout</h3>
-            <p>Flexbox allows easy alignment and distribution of space among items.</p>
-        </div>
+            <p>Flexbox se elements ko easily align aur responsive banaya ja sakta hai.</p>
+                    </div>
     `,
     js: `
         <h1 style="text-align:center;">JavaScript Logic Bible</h1>
         <div class="chapter">
             <h3>Chapter 1: DOM Manipulation</h3>
-            <p>Use JS to change HTML content dynamically.</p>
+            <p>JavaScript ke zariye hum HTML elements ko dynamically change kar sakte hain.</p>
             <div class="code-box">document.querySelector('h1').innerText = "Hello JS!";</div>
         </div>
         <div class="chapter">
-            <h3>Chapter 2: ES6 Features</h3>
-            <p>Modern JS features like Arrow Functions and Template Literals.</p>
+            <h3>Chapter 2: ES6 Functions</h3>
+            <p>Modern JS features jaise Arrow Functions aur Template Literals.</p>
         </div>
     `
 };
@@ -175,7 +171,7 @@ function openDoc(type) {
     const container = document.getElementById("modalContainer");
     container.innerHTML = megaNotes[type] + `
         <div style="text-align:center; padding-top:30px; border-top:1px solid #ddd;">
-            <h3>Learn more at Instagram</h3>
+            <p>Follow on Instagram for more tips:</p>
             <a href="https://instagram.com/codewithtiwariji" target="_blank" style="color:var(--insta); font-weight:bold; text-decoration:none;">@codewithtiwariji</a>
         </div>`;
     modal.style.display = "block";
@@ -188,21 +184,18 @@ function closeDoc() {
     document.body.style.overflow = "auto";
 }
 
-// THE WORKING DOWNLOAD LOGIC
+// REAL DOWNLOAD LOGIC
 function downloadDoc(type) {
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = megaNotes[type];
     const plainText = tempDiv.innerText || tempDiv.textContent;
-    
     const blob = new Blob([plainText + "\n\n© CodeWithTiwariJi"], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
-    
     const a = document.createElement("a");
     a.href = url;
-    a.download = `CodeWithTiwariJi_${type}_Complete_Notes.txt`;
+    a.download = `CodeWithTiwariJi_${type}_Notes.txt`;
     document.body.appendChild(a);
     a.click();
-    
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
